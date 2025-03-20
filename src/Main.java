@@ -34,6 +34,10 @@ public class Main {
 
         office.addComponent(officePass2);
 
+        office.showAll();
+
+        microsoft.removeComponent(office);
+
         pessoal.showAll();
     }
 }
