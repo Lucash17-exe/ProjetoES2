@@ -1,5 +1,5 @@
 package generatePassword;
 
-public interface Password {
+public interface PasswordInterface {
     public String generateText();
 }

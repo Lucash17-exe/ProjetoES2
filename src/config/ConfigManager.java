@@ -5,14 +5,14 @@ public class ConfigManager {
     private final String ALGORITHM = "AES";
     private final String SECRET_KEY = "1234567890123456";
 
-    private String dbConnectionString = "dbConnectionString";
+    private String fileName = "passwords.txt";
 
-    public String getDbConnectionString() {
-        return dbConnectionString;
+    public String getFileName() {
+        return fileName;
     }
 
-    public void setDbConnectionString(String dbConnectionString) {
-        this.dbConnectionString = dbConnectionString;
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 
     public String getALGORITHM() {

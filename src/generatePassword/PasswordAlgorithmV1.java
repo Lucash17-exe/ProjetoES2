@@ -4,7 +4,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class PasswordAlgorithmV1 implements Password {
+public class PasswordAlgorithmV1 implements PasswordInterface {
     private static final String UPPERCASE = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private static final String LOWERCASE = "abcdefghijklmnopqrstuvwxyz";
     private static final String DIGITS = "0123456789";
