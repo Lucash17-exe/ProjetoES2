@@ -73,6 +73,7 @@ public class ConnectionsPool {
         }
     }
 
+    //método reseta conexão para um estado padrão
     private void resetConnection(HttpURLConnection conn) throws ProtocolException {
         try {
             if (conn.getInputStream() != null) conn.getInputStream().close();
