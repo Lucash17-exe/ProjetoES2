@@ -2,40 +2,57 @@ package categoriesManager;
 
 import java.util.ArrayList;
 
-public class Category implements PasswordCategoryInterface{
+public class Category implements PasswordCategoryInterface {
     private String name;
     private ArrayList<PasswordCategoryInterface> components = new ArrayList<>();
+    private Category parent;
 
     public Category(String name) {
         this.name = name;
+    }
+
+    public void setParent(Category parent) {
+        this.parent = parent;
     }
 
     public String getName() {
         return name;
     }
 
-    public void addComponent(PasswordCategoryInterface component){
+    public void addComponent(PasswordCategoryInterface component) {
         components.add(component);
+        if (component instanceof Category) {
+            ((Category) component).setParent(this);
+        } else if (component instanceof Password) {
+            ((Password) component).setParent(this);
+        }
     }
 
-    public void removeComponent(PasswordCategoryInterface component){
+    public void removeComponent(PasswordCategoryInterface component) {
         components.remove(component);
     }
 
-    public void showAll() {
-        int level = 0;
-        String indent = "\t".repeat(level);
-
-        System.out.println(indent + "📁 " + name);
-
-        for (PasswordCategoryInterface component : components) {
-            component.showAll(level + 1);
+    @Override
+    public ArrayList<PasswordCategoryInterface> getComponents() {
+        if (this.components == null) {
+            this.components = new ArrayList<>();
         }
+        return this.components;
+    }
+
+    public String getData() {
+        return name;
+    }
+
+    public void showAll() {
+        showAll(0);
     }
 
     public void showAll(int level) {
-        String indent = "\t".repeat(level);
-
+        String indent = "";
+        for(int i = 0; i < level; i++) {
+            indent += "\t";
+        }
         System.out.println(indent + "📁 " + name);
 
         for (PasswordCategoryInterface component : components) {
@@ -43,4 +60,10 @@ public class Category implements PasswordCategoryInterface{
         }
     }
 
+    public String getCategoryPath() {
+        if (parent == null) {
+            return name;
+        }
+        return parent.getCategoryPath() + "/" + name;
+    }
 }

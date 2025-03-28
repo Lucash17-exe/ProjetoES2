@@ -1,5 +1,9 @@
 package config;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 public class ConfigManager {
     private static ConfigManager instance = null;
     private final String ALGORITHM = "AES";
@@ -8,6 +12,8 @@ public class ConfigManager {
     private final String API_URL = "https://passwordsApi";
 
     private String fileName = "passwords.txt";
+
+    FileWriter fw = null;
 
     public String getFileName() {
         return fileName;

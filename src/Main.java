@@ -1,10 +1,13 @@
-import categoriesManager.Category;
-import categoriesManager.Password;
-import generatePassword.PasswordInterface;
-import generatePassword.PasswordFactory;
+import categoriesManager.*;
+import generatePassword.*;
+import storage.*;
+
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+        FileStorage fileStorage = new FileStorage();
+        PasswordStorage passwordStorage = new PasswordStorage(fileStorage);
 
         PasswordInterface pass = PasswordFactory.generatePassword("v1");
 
@@ -20,7 +23,7 @@ public class Main {
 
         Password officePass = new Password("conta 1",pass.generateText());
 
-        Password officePass2 = new Password("conta 1",pass.generateText());
+        Password officePass2 = new Password("conta 2",pass.generateText());
 
         pessoal.addComponent(microsoft);
 
@@ -34,10 +37,11 @@ public class Main {
 
         office.addComponent(officePass2);
 
-        office.showAll();
-
-        microsoft.removeComponent(office);
-
         pessoal.showAll();
+
+        System.out.println("Trello Path: " + trelloPass.getCategoryPath());
+        System.out.println("Office Path: " + officePass.getCategoryPath());
+        System.out.println("Office2 Path: " + officePass2.getCategoryPath());
+        passwordStorage.save(pessoal);
     }
 }
