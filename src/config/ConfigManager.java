@@ -4,6 +4,7 @@ public class ConfigManager {
     private static ConfigManager instance = null;
     private final String ALGORITHM = "AES";
     private final String SECRET_KEY = "1234567890123456";
+    private final int MAX_CONNECTION_POOL_SIZE = 10;
 
     private String fileName = "passwords.txt";
 
@@ -17,6 +18,10 @@ public class ConfigManager {
 
     public String getALGORITHM() {
         return ALGORITHM;
+    }
+
+    public int getMaxConnectionPoolSize() {
+        return MAX_CONNECTION_POOL_SIZE;
     }
 
     public String getSecretKey() {
