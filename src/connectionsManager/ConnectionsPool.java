@@ -11,32 +11,25 @@ import java.util.ArrayList;
 public class ConnectionsPool {
     private static ConnectionsPool singleInstance = null;
 
-    private int maxPoolSize = 0;
+    private static ConfigManager configManager = ConfigManager.getInstance();
 
     private static ArrayList<HttpURLConnection> inUse  = new ArrayList<HttpURLConnection>();
     private static ArrayList<HttpURLConnection> available = new ArrayList<HttpURLConnection>();
 
-    private ConnectionsPool(int maxPoolSize){
-        this.maxPoolSize = maxPoolSize;
-    }
-
-    public void setMaxPoolSize(int size) {
-        this.maxPoolSize = size;
-    }
+    private ConnectionsPool(){}
 
     public static synchronized ConnectionsPool getInstance()
     {
         if (singleInstance == null)
         {
-            ConfigManager configManager = ConfigManager.getInstance();
-            singleInstance = new ConnectionsPool(configManager.getMaxConnectionPoolSize());
+            singleInstance = new ConnectionsPool();
         }
 
         return singleInstance;
     }
 
     public synchronized HttpURLConnection acquire() throws NoConnectionsAvailableException, IOException {
-        if (inUse.size() >= maxPoolSize) throw new NoConnectionsAvailableException();
+        if (inUse.size() >= configManager.getMaxConnectionPoolSize()) throw new NoConnectionsAvailableException();
 
         if (available.size() > 0) {
             HttpURLConnection temp = available.get(0);
@@ -45,7 +38,7 @@ public class ConnectionsPool {
             return temp;
         }
 
-        URL url = new URL("https://passwordsApi");
+        URL url = new URL(configManager.getApiURL());
         HttpURLConnection newObj = (HttpURLConnection) url.openConnection();
         inUse.add(newObj);
         return newObj;
