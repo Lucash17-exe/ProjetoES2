@@ -11,6 +11,10 @@ public class PasswordStorage {
         this.storage = storage;
     }
 
+    public StorageImplementation getStorage(){
+        return this.storage;
+    }
+
     public void save(Category category) {
         traverseAndSave(category, category.getName());
     }
@@ -20,12 +24,13 @@ public class PasswordStorage {
             if (component instanceof Category) {
                 traverseAndSave((Category) component, currentPath + "/" + component.getName());
             } else if (component instanceof Password) {
-                storage.savePassword(currentPath + "/" + component.getName(), ((Password) component).getPassword());
+                storage.savePassword(currentPath + " - " + component.getName(), ((Password) component).getPassword());
             }
         }
     }
 
-    public String retrieve(String categoryPath) {
-        return storage.getPassword(categoryPath);
+    public String retrieve(String categoryPath, String passName) {
+        return storage.getPassword(categoryPath, passName);
     }
+
 }

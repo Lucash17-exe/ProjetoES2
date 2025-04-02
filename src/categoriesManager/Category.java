@@ -1,5 +1,6 @@
 package categoriesManager;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 public class Category implements PasswordCategoryInterface {
@@ -38,6 +39,16 @@ public class Category implements PasswordCategoryInterface {
             this.components = new ArrayList<>();
         }
         return this.components;
+    }
+
+    public PasswordCategoryInterface containsComponent(String componentName){
+        for (PasswordCategoryInterface component : components){
+            if (component.getName().equals(componentName))
+            {
+                return component;
+            }
+        }
+        return null;
     }
 
     public String getData() {
