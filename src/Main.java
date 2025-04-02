@@ -17,7 +17,7 @@ public class Main {
         PasswordInterface passGenerator = PasswordFactory.generatePassword("v1");
         PasswordHistoryManager historyManager = new PasswordHistoryManager();
 
-        passwordManager.addPassword(passGenerator.generateText(), "Geral");
+        passwordManager.addPassword(passGenerator.generateText(), "Geral/bruno");
 
         System.out.println("\nSAVED:\n\n");
         for (Category category : passwordManager.getSavedCategories())

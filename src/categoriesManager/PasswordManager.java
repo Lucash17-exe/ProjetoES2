@@ -29,24 +29,19 @@ public class PasswordManager {
     }
 
     public void addPassword(String password, String categoryPath) {
-        // Divide o caminho em partes
         String[] pathParts = categoryPath.split("/");
 
-        // Encontra ou cria a estrutura de categorias
         Category parentCategory = findOrCreateParentCategory(pathParts);
 
-        // Cria e adiciona a senha à última categoria do caminho
         Password newPassword = new Password(pathParts[pathParts.length-1], password);
         parentCategory.addComponent(newPassword);
 
-        // Marca a categoria pai como não salva
         markCategoryAsUnsaved(parentCategory);
     }
 
     private Category findOrCreateParentCategory(String[] pathParts) {
         Category currentCategory = null;
 
-        // Procura na hierarquia de categorias salvas
         for (Category savedCategory : savedCategories) {
             if (savedCategory.getName().equals(pathParts[0])) {
                 currentCategory = savedCategory;
@@ -54,13 +49,11 @@ public class PasswordManager {
             }
         }
 
-        // Se não encontrou na raiz, cria nova categoria
         if (currentCategory == null) {
             currentCategory = new Category(pathParts[0]);
             unsavedCategories.add(currentCategory);
         }
 
-        // Navega pelas subcategorias
         for (int i = 1; i < pathParts.length - 1; i++) {
             String subCategoryName = pathParts[i];
             Category subCategory = findSubCategory(currentCategory, subCategoryName);
@@ -68,7 +61,7 @@ public class PasswordManager {
             if (subCategory == null) {
                 subCategory = new Category(subCategoryName);
                 currentCategory.addComponent(subCategory);
-                markCategoryAsUnsaved(currentCategory); // Pai precisa ser salvo
+                markCategoryAsUnsaved(currentCategory);
             }
 
             currentCategory = subCategory;
@@ -87,12 +80,10 @@ public class PasswordManager {
     }
 
     private void markCategoryAsUnsaved(Category category) {
-        // Remove de savedCategories se estiver lá
         if (savedCategories.remove(category)) {
             unsavedCategories.add(category);
         }
 
-        // Se já está em unsavedCategories, não faz nada
     }
 
     public void saveChanges(PasswordStorage passwordStorage) {
