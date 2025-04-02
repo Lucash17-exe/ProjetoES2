@@ -51,6 +51,6 @@ public class Password implements PasswordCategoryInterface {
         if (parent == null) {
             return "";
         }
-        return parent.getCategoryPath() + "/" + getData();
+        return parent.getCategoryPath();
     }
 }
