@@ -2,13 +2,25 @@ import categoriesManager.*;
 import generatePassword.*;
 import stateManager.PasswordHistoryManager;
 import storage.*;
+import authentication.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) throws IOException {
 
-        // 1. Inicialização dos componentes
+        AuthInterface baseAuth = new Auth(null);
+        AuthInterface authWithMFA = new AuthMultifactor(baseAuth);
+        AuthInterface authWithFingerprint = new AuthFingerPrint(baseAuth);
+
+        String username = "admin";
+        String password = "admin";
+
+        System.out.println("Tentando autenticação com MFA e Impressão Digital...");
+        authWithFingerprint.auth(username, password);
+        System.out.println("Autenticação bem-sucedida!");
+
+       /* // 1. Inicialização dos componentes
         FileStorage fileStorage = new FileStorage();
         PasswordStorage storage = new PasswordStorage(fileStorage);
         ArrayList<PasswordStorage> storages = new ArrayList<>();
@@ -54,7 +66,7 @@ public class Main {
         for (Category category : passwordManager.getUnsavedCategories())
             category.showAll();
 
-        System.out.println("\nFIM\n\n");
+        System.out.println("\nFIM\n\n");*/
 
         /*
 
